@@ -24,13 +24,12 @@ const persons = [
 
 function renameKeysToTitleCase(arrObj: {}[]) {
   function renameKey(obj: {}, old_key: string, new_key: string) {
-    if (old_key !== new_key) {
-      const descriptor = Object.getOwnPropertyDescriptor(obj, old_key)
-      if (descriptor) {
-        Object.defineProperty(obj, new_key, descriptor)
-        delete obj[old_key]
-      }
-    }
+    if (old_key === new_key) return
+    if (!old_key.includes('_')) return
+    const descriptor = Object.getOwnPropertyDescriptor(obj, old_key)
+    if (!descriptor) return
+    Object.defineProperty(obj, new_key, descriptor)
+    delete obj[old_key]
   }
 
   const toTitleCase = (str: string) => {
